@@ -1,24 +1,27 @@
 function EcmaUnitRunner(){
   this.run = function(testFixture){
-    var isFunction = function(fn){
-      return (typeof fn === "function");
+
+    var functionName = function(func) {
+      return func.toString();
+    };
+
+    var isFunction = function(func){
+      return (typeof func === "function");
     };
 
     var runTest = function(test, fixtureResult){
+      var testResult = {
+        test: test,
+        testName: functionName(test)
+      };
+      fixtureResult.testResults.push(testResult);
       try{
         test();
-        fixtureResult.testResults.push({
-          result: "pass", 
-          test: test
-        });
+        testResult.result = "pass";
         fixtureResult.passCount++;
-
       }catch(exception){
-        fixtureResult.testResults.push({
-          result: "fail", 
-          test: test,
-          exception: exception
-        });
+        testResult.result = "fail";
+        testResult.exception = exception;
         fixtureResult.failCount++;
       }
     };

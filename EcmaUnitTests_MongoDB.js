@@ -1,6 +1,6 @@
 load('EcmaUnit.js');
 
-function test1(){
+function test1_passingTest(){
   var runner = new EcmaUnitRunner();
 
   var test1WasCalled = false;
@@ -16,6 +16,9 @@ function test1(){
   assert(result.passed === true, 'Expected result.passed was true');
   assert(result.passCount === 1, 'Expected result.passCount was 1');
   assert(result.failCount === 0, 'Expected result.failCount was 0');
+  assert(result.testResults.length === 1);
+  assert(result.testResults[0].result === "pass");
+  //assert(result.testResults[0].testName === "test1", result.testResults[0].testName);
 }
 
 function test2_failingTest(){
@@ -33,12 +36,14 @@ function test2_failingTest(){
   assert(result.passed === false, "Runner did not return result.passed of false");
   assert(result.passCount === 0, 'Expected result.passCount was 0');
   assert(result.failCount === 1, 'Expected result.failCount was 1');
+  assert(result.testResults.length === 1);
+  assert(result.testResults[0].result === "fail");
 }
 
 main();
 
 function main(){
-  var tests = [test1, test2_failingTest];
+  var tests = [test1_passingTest, test2_failingTest];
 
   var failed = false;
 

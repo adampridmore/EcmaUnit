@@ -40,10 +40,32 @@ function test2_failingTest(){
   assert(result.testResults[0].result === "fail");
 }
 
+function test3_printTestResults(){
+  var runner = new ecmaUnit.Runner();
+
+  var testFixture = {
+    test1: function(){
+      throw "test2_error";
+    },
+    test2: function(){
+      // Passes
+    }
+  };
+
+  var result = runner.run(testFixture);
+  //printjson(result);    
+
+  var actualText = result.stringify();
+  //printjson(result);
+  var expectedText = 'Test Results\r\n============\r\nRan\r\ntest1 - fail\r\ntest2 - pass';
+
+  assert(actualText === expectedText, 'Incorrect actualText:\r\n' + actualText + "\r\nExpected\r\n" + expectedText);
+}
+
 main();
 
 function main(){
-  var tests = [test1_passingTest, test2_failingTest];
+  var tests = [test1_passingTest, test2_failingTest,test3_printTestResults];
 
   var failed = false;
 

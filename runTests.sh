@@ -1,0 +1,1 @@
+mongo --nodb EcmaUnitTests_MongoDB.js

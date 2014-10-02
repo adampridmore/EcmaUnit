@@ -3,18 +3,13 @@ var ecmaUnit = ecmaUnit || {};
 ecmaUnit.Runner = function (){
   this.run = function(testFixture){
 
-    var functionName = function(func) {
-      return func.toString();
-    };
-
     var isFunction = function(func){
       return (typeof func === "function");
     };
 
-    var runTest = function(test, fixtureResult){
+    var runTest = function(test, fixtureResult, testName){
       var testResult = {
-        test: test,
-        testName: functionName(test)
+        testName: testName
       };
       fixtureResult.testResults.push(testResult);
       try{
@@ -34,19 +29,34 @@ ecmaUnit.Runner = function (){
       } else {
         fixtureResult.passed = false;
       }
-    }
+    };
 
-    var runFixtureInternal = function(testFixture){
-      var fixtureResult = {
-        testResults: [],
-        passCount: 0,
-        failCount: 0
+    var FixtureResult = function(){
+      var that = this;
+      this.testResults = [];
+      this.passCount = 0;
+      this.failCount = 0;
+      
+      this.stringify = function(){
+        var lines = [];
+        lines.push('Test Results');
+        lines.push('============');
+        lines.push('Ran');
+        that.testResults.forEach(function(testResult){
+          lines.push(testResult.testName + ' - ' + testResult.result);;
+        });
+
+        return lines.join('\r\n');
       };
+    };
+    
+    var runFixtureInternal = function(testFixture){
+      var fixtureResult = new FixtureResult();
 
       for(property in testFixture){
         var test = testFixture[property];
         if (isFunction(test)){
-          runTest(test, fixtureResult);
+          runTest(test, fixtureResult, property);
         }
       }
 

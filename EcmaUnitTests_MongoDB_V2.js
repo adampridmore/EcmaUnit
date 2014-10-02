@@ -39,6 +39,27 @@ var testFixture = {
     assert(result.failCount === 1, 'Expected result.failCount was 1');
     assert(result.testResults.length === 1);
     assert(result.testResults[0].result === "fail");
+  },
+
+  test3_printTestResults : function(){
+    var runner = new ecmaUnit.Runner();
+
+    var testFixture = {
+      test1: function(){
+        throw "test2_error";
+      },
+      test2: function(){
+        // Passes
+      }
+    };
+
+    var result = runner.run(testFixture);
+    //printjson(result);    
+
+    var actualText = result.stringify();
+    print(actualText);
+    //printjson(result);
+    assert(actualText === "Test Runner", 'Incorrect actualText: ' + actualText);
   }
 };
 

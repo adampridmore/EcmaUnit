@@ -11,6 +11,7 @@ ecmaUnit.Runner = function (){
       var testResult = {
         testName: testName
       };
+
       fixtureResult.testResults.push(testResult);
       try{
         test();
@@ -23,35 +24,8 @@ ecmaUnit.Runner = function (){
       }
     };
 
-    var setPassedFlag = function(fixtureResult){
-      if (fixtureResult.failCount === 0){
-        fixtureResult.passed = true;
-      } else {
-        fixtureResult.passed = false;
-      }
-    };
-
-    var FixtureResult = function(){
-      var that = this;
-      this.testResults = [];
-      this.passCount = 0;
-      this.failCount = 0;
-      
-      this.stringify = function(){
-        var lines = [];
-        lines.push('Test Results');
-        lines.push('============');
-        lines.push('Ran');
-        that.testResults.forEach(function(testResult){
-          lines.push(testResult.testName + ' - ' + testResult.result);;
-        });
-
-        return lines.join('\r\n');
-      };
-    };
-    
     var runFixtureInternal = function(testFixture){
-      var fixtureResult = new FixtureResult();
+      var fixtureResult = new ecmaUnit.FixtureResult();
 
       for(property in testFixture){
         var test = testFixture[property];
@@ -60,11 +34,38 @@ ecmaUnit.Runner = function (){
         }
       }
 
-      setPassedFlag(fixtureResult);
+      fixtureResult.setPassedFlag();
 
       return fixtureResult;
     };
 
     return runFixtureInternal(testFixture);
   }
+};
+
+ecmaUnit.FixtureResult = function(){
+  var that = this;
+  this.testResults = [];
+  this.passCount = 0;
+  this.failCount = 0;
+  
+  this.stringify = function(){
+    var lines = [];
+    lines.push('Test Results');
+    lines.push('============');
+    lines.push('Ran');
+    that.testResults.forEach(function(testResult){
+      lines.push(testResult.testName + ' - ' + testResult.result);;
+    });
+
+    return lines.join('\r\n');
+  };
+
+  this.setPassedFlag = function(fixtureResult){
+    if (that.failCount === 0){
+      that.passed = true;
+    } else {
+      that.passed = false;
+    }
+  };
 };

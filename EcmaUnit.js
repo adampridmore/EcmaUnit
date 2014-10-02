@@ -1,4 +1,6 @@
-function EcmaUnitRunner(){
+var ecmaUnit = ecmaUnit || {};
+
+ecmaUnit.Runner = function (){
   this.run = function(testFixture){
 
     var functionName = function(func) {

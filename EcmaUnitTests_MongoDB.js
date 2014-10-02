@@ -1,7 +1,7 @@
 load('EcmaUnit.js');
 
 function test1_passingTest(){
-  var runner = new EcmaUnitRunner();
+  var runner = new ecmaUnit.Runner();
 
   var test1WasCalled = false;
   var testFixture = {
@@ -22,7 +22,7 @@ function test1_passingTest(){
 }
 
 function test2_failingTest(){
-  var runner = new EcmaUnitRunner();
+  var runner = new ecmaUnit.Runner();
 
   var testFixture = {
     test1: function(){

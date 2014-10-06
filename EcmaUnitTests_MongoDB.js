@@ -93,6 +93,15 @@ var tests = {
       assert(e === "Expected 'a' but was 'b'\r\nMessage: MyErrorMessage", e);
     }
   },
+
+  assertFail : function(){
+    try{
+      assert.fail('MyFailMessage');
+      assert(false, 'Expected exception to be thrown.');
+    }catch(e){
+      assert(e === 'Fail: MyFailMessage');
+    }    
+  },
 }
 
 main();

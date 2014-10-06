@@ -84,4 +84,8 @@ assert.areEqual = function(expected, actual, message){
   }
 
   throw error;
+};
+
+assert.fail = function(message){
+  throw 'Fail: ' + message;
 }

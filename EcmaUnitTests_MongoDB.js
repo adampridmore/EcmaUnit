@@ -17,8 +17,8 @@ function test1_passingTest(){
   assert(result.passCount === 1, 'Expected result.passCount was 1');
   assert(result.failCount === 0, 'Expected result.failCount was 0');
   assert(result.testResults.length === 1);
-  assert(result.testResults[0].result === "pass");
-  //assert(result.testResults[0].testName === "test1", result.testResults[0].testName);
+  assert(result.testResults[0].result === 'pass');
+  //assert(result.testResults[0].testName === 'test1', result.testResults[0].testName);
 }
 
 function test2_failingTest(){
@@ -26,7 +26,7 @@ function test2_failingTest(){
 
   var testFixture = {
     test1: function(){
-      throw "test2_error";
+      throw 'test2_error';
     }
   };
 
@@ -45,7 +45,7 @@ function test3_printTestResults(){
 
   var testFixture = {
     test1: function(){
-      throw "test2_error";
+      throw 'test2_error';
     },
     test2: function(){
       // Passes
@@ -59,13 +59,51 @@ function test3_printTestResults(){
   //printjson(result);
   var expectedText = 'Test Results\r\n============\r\nRan\r\ntest1 - fail\r\ntest2 - pass';
 
-  assert(actualText === expectedText, 'Incorrect actualText:\r\n' + actualText + "\r\nExpected\r\n" + expectedText);
+  assert(actualText === expectedText, 'Incorrect actualText:\r\n' + actualText + '\r\nExpected\r\n' + expectedText);
+}
+
+function test4_assertEquals_when_equal(){
+  assert.areEqual('a', 'a');
+  assert.areEqual(1, 1);
+  assert.areEqual(1.1, 1.1);
+  assert.areEqual(true, true);
+  assert.areEqual(null, null);
+  assert.areEqual(undefined, undefined);
+  
+  var a = {};
+  var b = a;
+  assert.areEqual(a, b);
+}
+
+function test4_assertEquals_when_not_equal(){
+  try{
+    assert.areEqual('a', 'b');
+    assert(false, 'Expected exception to be thrown');
+  }catch(e){
+    assert(e === "Expected 'a' but was 'b'", e);
+  }  
+}
+
+function test4_assertEquals_when_not_equal_with_message(){
+  try{
+    assert.areEqual('a', 'b', "MyErrorMessage");
+    assert(false, 'Expected exception to be thrown.');
+  }catch(e){
+    assert(e === "Expected 'a' but was 'b'\r\nMessage: MyErrorMessage", e);
+  }
 }
 
 main();
 
 function main(){
-  var tests = [test1_passingTest, test2_failingTest,test3_printTestResults];
+  var tests = [
+    test1_passingTest, 
+    test2_failingTest,
+    test3_printTestResults,
+    test4_assertEquals_when_equal,
+    test4_assertEquals_when_not_equal,
+    test4_assertEquals_when_not_equal_with_message
+  ];
 
   var failed = false;
 

@@ -69,3 +69,19 @@ ecmaUnit.FixtureResult = function(){
     }
   };
 };
+
+var assert = assert || {};
+
+assert.areEqual = function(expected, actual, message){
+  if (expected === actual){
+    return;
+  }
+
+  var error = "Expected '" + expected + "' but was '" + actual + "'";
+
+  if (message){
+    error += '\r\nMessage: ' + message;
+  }
+
+  throw error;
+}

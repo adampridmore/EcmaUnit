@@ -25,5 +25,10 @@ var testFixture = {
 	}
 };
 
-runner.run(testFixture);
+var result = runner.run(testFixture);
+var testTestResults = result.stringify();
+
+// Print using your environments console/out/print comment here.
+// print(testTestResults);
+// console.log(testTestResults);
 ```

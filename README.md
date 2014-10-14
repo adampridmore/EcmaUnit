@@ -21,7 +21,8 @@ var runner = new EcmaUnitRunner();
 
 var testFixture = {
 	test1: function(){
-		// This will be executed
+		var sum = 8 + 2;
+		assert.areEqual(10, sum);
 	}
 };
 

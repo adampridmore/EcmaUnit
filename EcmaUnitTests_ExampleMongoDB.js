@@ -1,12 +1,12 @@
-var ecmaUnit = require('./EcmaUnit.js');
+load('./ecmaUnit.js');
 
 var fixture = {
 	test1: function(){
-		console.log("test1");
+		print('test1');
 	}
 };
 
 var runner = new ecmaUnit.Runner();
 var result = runner.run(fixture);
 
-console.log(result.stringify());
+print(result.stringify());

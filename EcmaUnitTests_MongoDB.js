@@ -125,6 +125,7 @@ function main(){
     print('************');
     print('Tests Failed');
     print('************');
+    throw 'Tests Failed';
   }else {
     print('Passed');
   }

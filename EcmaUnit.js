@@ -89,3 +89,9 @@ assert.areEqual = function(expected, actual, message){
 assert.fail = function(message){
   throw 'Fail: ' + message;
 };
+
+
+var module = module || null;
+if (module){
+  module.exports = ecmaUnit;
+}

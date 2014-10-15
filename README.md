@@ -7,29 +7,80 @@ A pure EcmaScript / JavaScript unit testing framework, with no dependencies on r
 Load EcmaUnit.js into your JavaScript runtime. e.g.
 
 ###For MongoDB
+```javascript
+load('./ecmaUnit.js');
 
-`load('EcmaUnit.js');`
+var fixture = {
+  test1: function(){
+    print("test1");
+  },
+  test2: function(){
+    assert.areEqual('a','a');
+  }
+};
+
+var runner = new ecmaUnit.Runner();
+var result = runner.run(fixture);
+
+print(result.stringify());
+```
+
+###For node.js
+```javascript
+var ecmaUnit = require('./EcmaUnit.js').ecmaUnit;
+var assert = require('./EcmaUnit.js').assert;
+
+var fixture = {
+  test1: function(){
+    console.log("test1");
+  },
+  test2: function(){
+    assert.areEqual('a','a');
+  }
+};
+
+var runner = new ecmaUnit.Runner();
+var result = runner.run(fixture);
+
+console.log(result.stringify());
+
+if (!result.passed){
+	throw result;
+}
+```
 
 ###For HTML
 
- `<script type="text/javascript" src="EcmaUnit.js"></script>`
+```HTML
+<html>
+<head>
+  <script type="text/javascript" src="EcmaUnit.js"></script>
+</head>
 
-Then to run the tests in a fixture:
+<div id='testResults' style="white-space:pre-wrap;"></div>
 
-```
-var runner = new EcmaUnitRunner();
+<script type="text/javascript">
+  var fixture = {
+    test1: function(){
+      console.log("test1");
+    },
+    test2: function(){
+      assert.areEqual('a','a');
+    }
+  };
 
-var testFixture = {
-	test1: function(){
-		var sum = 8 + 2;
-		assert.areEqual(10, sum);
-	}
-};
+  var runner = new ecmaUnit.Runner();
+  var result = runner.run(fixture);
 
-var result = runner.run(testFixture);
-var testTestResults = result.stringify();
+  var resultTest = result.stringify();
 
-// Print using your environments console/out/print comment here.
-// print(testTestResults);
-// console.log(testTestResults);
+  console.log(resultTest);
+
+  document.getElementById("testResults").innerHTML = resultTest;
+
+  if (!result.passed){
+    throw result;
+  }  
+</script>
+</html>
 ```

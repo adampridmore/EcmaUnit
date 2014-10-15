@@ -1,3 +1,5 @@
+// Version 1.0
+
 var ecmaUnit = ecmaUnit || {};
 
 ecmaUnit.Runner = function (){

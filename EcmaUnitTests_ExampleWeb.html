@@ -1,0 +1,31 @@
+<html>
+<head>
+  <script type="text/javascript" src="EcmaUnit.js"></script>
+</head>
+
+<div id='testResults' style="white-space:pre-wrap;"></div>
+
+<script type="text/javascript">
+  var fixture = {
+    test1: function(){
+      console.log("test1");
+    },
+    test2: function(){
+      assert.areEqual('a','a');
+    }
+  };
+
+  var runner = new ecmaUnit.Runner();
+  var result = runner.run(fixture);
+
+  var resultTest = result.stringify();
+
+  console.log(resultTest);
+
+  document.getElementById("testResults").innerHTML = resultTest;
+
+  if (!result.passed){
+    throw result;
+  }  
+</script>
+</html>

@@ -90,8 +90,11 @@ assert.fail = function(message){
   throw 'Fail: ' + message;
 };
 
-
+// Export the module for nodejs
 var module = module || null;
 if (module){
-  module.exports = ecmaUnit;
+  module.exports= {
+    ecmaUnit: ecmaUnit,
+    assert: assert
+  }
 }

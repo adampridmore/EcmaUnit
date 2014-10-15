@@ -4,7 +4,20 @@ A pure EcmaScript / JavaScript unit testing framework, with no dependencies on r
 
 ##Getting Started
 
-Load EcmaUnit.js into your JavaScript runtime. e.g.
+Just load the EcmaUnit.js into your JavaScript runtime, create a fixture and run it.
+
+###General
+```
+var fixture = {
+  test1: function(){
+    assert.areEqual('a','a');
+  }
+};
+
+var runner = new ecmaUnit.Runner();
+var result = runner.run(fixture);
+console.log(result.stringify());
+```
 
 ###For MongoDB
 ```javascript
@@ -12,9 +25,6 @@ load('./ecmaUnit.js');
 
 var fixture = {
   test1: function(){
-    print("test1");
-  },
-  test2: function(){
     assert.areEqual('a','a');
   }
 };
@@ -32,9 +42,6 @@ var assert = require('./EcmaUnit.js').assert;
 
 var fixture = {
   test1: function(){
-    console.log("test1");
-  },
-  test2: function(){
     assert.areEqual('a','a');
   }
 };

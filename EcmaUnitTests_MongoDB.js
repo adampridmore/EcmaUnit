@@ -55,22 +55,19 @@ var tests = {
     };
 
     var result = runner.run(testFixture);
-    //printjson(result);    
 
     var actualText = result.stringify();
-    //printjson(result);
-    var expectedText = 'Test Results\r\n============\r\nRan\r\ntest1\t-\tfail\r\n\tException: \'test2_error\'\r\ntest2\t-\tpass';
 
-/*
-    Test Results
-    ============
-    Ran
-    test1\t-\tfail
-      exception: 'test2_error'
-    test2\t-\tpass
-*/
+    // print('+');
+    // print(actualText);
+    var actualLines = actualText.split('\r\n');
 
-    assert(actualText === expectedText, 'Incorrect actualText:\r\n' + actualText + '\r\nExpected\r\n' + expectedText);
+    assert.areEqual(actualLines[0], 'Test Results');
+    assert.areEqual(actualLines[1], '============');
+    assert.areEqual(actualLines[2], 'Ran');
+    assert.areEqual(actualLines[3], 'test1\t-\tfail');
+    assert.areEqual(actualLines[4], '\tException: \'test2_error\'');
+    assert.areEqual(actualLines[5], 'test2\t-\tpass');
   },
 
   assertEquals_when_equal : function(){

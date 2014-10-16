@@ -1,7 +1,7 @@
 load('EcmaUnit.js');
 
 var tests = {
-  test1_passingTest : function(){
+  passingTest : function(){
     var runner = new ecmaUnit.Runner();
 
     var test1WasCalled = false;
@@ -22,7 +22,7 @@ var tests = {
     //assert(result.testResults[0].testName === 'test1', result.testResults[0].testName);
   },
 
-  test2_failingTest : function(){
+  failingTest : function(){
     var runner = new ecmaUnit.Runner();
 
     var testFixture = {
@@ -41,7 +41,7 @@ var tests = {
     assert(result.testResults[0].result === "fail");
   },
 
-  test3_printTestResults : function(){
+  printTestResults : function(){
     var runner = new ecmaUnit.Runner();
 
     var testFixture = {
@@ -58,12 +58,21 @@ var tests = {
 
     var actualText = result.stringify();
     //printjson(result);
-    var expectedText = 'Test Results\r\n============\r\nRan\r\ntest1 - fail\r\ntest2 - pass';
+    var expectedText = 'Test Results\r\n============\r\nRan\r\ntest1\t-\tfail\r\n\tException: \'test2_error\'\r\ntest2\t-\tpass';
+
+/*
+    Test Results
+    ============
+    Ran
+    test1\t-\tfail
+      exception: 'test2_error'
+    test2\t-\tpass
+*/
 
     assert(actualText === expectedText, 'Incorrect actualText:\r\n' + actualText + '\r\nExpected\r\n' + expectedText);
   },
 
-  test4_assertEquals_when_equal : function(){
+  assertEquals_when_equal : function(){
     assert.areEqual('a', 'a');
     assert.areEqual(1, 1);
     assert.areEqual(1.1, 1.1);
@@ -76,7 +85,7 @@ var tests = {
     assert.areEqual(a, b);
   },
 
-  test4_assertEquals_when_not_equal : function(){
+  assertEquals_when_not_equal : function(){
     try{
       assert.areEqual('a', 'b');
       assert(false, 'Expected exception to be thrown');
@@ -85,7 +94,7 @@ var tests = {
     }  
   },
 
-  test4_assertEquals_when_not_equal_with_message : function(){
+  assertEquals_when_not_equal_with_message : function(){
     try{
       assert.areEqual('a', 'b', "MyErrorMessage");
       assert(false, 'Expected exception to be thrown.');

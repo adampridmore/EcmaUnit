@@ -57,7 +57,12 @@ ecmaUnit.FixtureResult = function(){
     lines.push('============');
     lines.push('Ran');
     that.testResults.forEach(function(testResult){
-      lines.push(testResult.testName + ' - ' + testResult.result);;
+      var line = testResult.testName + '\t-\t' + testResult.result;
+      lines.push(line);
+
+      if (testResult.result === 'fail'){
+        lines.push('\tException: \'' + testResult.exception + '\'');
+      }
     });
 
     return lines.join('\r\n');

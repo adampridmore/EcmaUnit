@@ -47,6 +47,7 @@ var tests = {
     var testFixture = {
       test1: function(){
         throw 'test2_error';
+        //assert.fail('test2_error');
       },
       test2: function(){
         // Passes
@@ -90,7 +91,7 @@ var tests = {
       assert.areEqual('a', 'b');
       assert(false, 'Expected exception to be thrown');
     }catch(e){
-      assert(e === "Expected 'a' but was 'b'", e);
+      assert(e.toString() === "Error: Expected 'a' but was 'b'", e);
     }  
   },
 
@@ -99,7 +100,7 @@ var tests = {
       assert.areEqual('a', 'b', "MyErrorMessage");
       assert(false, 'Expected exception to be thrown.');
     }catch(e){
-      assert(e === "Expected 'a' but was 'b'\r\nMessage: MyErrorMessage", e);
+      assert(e.toString()=== "Error: Expected 'a' but was 'b'\r\nMessage: MyErrorMessage", e);
     }
   },
 
@@ -108,7 +109,20 @@ var tests = {
       assert.fail('MyFailMessage');
       assert(false, 'Expected exception to be thrown.');
     }catch(e){
-      assert(e === 'Fail: MyFailMessage');
+      assert(e.toString() === 'Error: Fail: MyFailMessage');
+    }    
+  },
+
+  assertContains : function(actualText, contains){
+    assert.stringContains('abc','a');
+  },
+
+  assertContains_when_no_match : function(actualText, contains){
+    try{
+      assert.stringContains('abc','d');
+      assert.fail('Exception not thrown');
+    }catch(e){
+      assert(e.toString() === 'Error: String "abc" did not contain "d"', e.toString());
     }    
   },
 }
@@ -124,7 +138,7 @@ function main(){
       tests[testName]();
     }catch(e){
       failed = true;
-      print('Test failed: ' + testName);
+      print('** Test Failed **: ' + testName);
       print(e);
     }
   };

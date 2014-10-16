@@ -1,4 +1,4 @@
-// Version 1.0
+// Version 1.1
 
 var ecmaUnit = ecmaUnit || {};
 
@@ -62,6 +62,9 @@ ecmaUnit.FixtureResult = function(){
 
       if (testResult.result === 'fail'){
         lines.push('\tException: \'' + testResult.exception + '\'');
+        if (testResult.exception.stack){
+          lines.push('\tAt: ' + testResult.exception.stack);
+        }        
       }
     });
 
@@ -84,17 +87,23 @@ assert.areEqual = function(expected, actual, message){
     return;
   }
 
-  var error = "Expected '" + expected + "' but was '" + actual + "'";
+  var errorMessage = "Expected '" + expected + "' but was '" + actual + "'";
 
   if (message){
-    error += '\r\nMessage: ' + message;
+    errorMessage += '\r\nMessage: ' + message;
   }
 
-  throw error;
+  throw new Error(errorMessage);
 };
 
 assert.fail = function(message){
-  throw 'Fail: ' + message;
+  throw new Error('Fail: ' + message);
+};
+
+assert.stringContains = function(string, match){
+  if (string.indexOf(match) === -1){
+    throw new Error('String "' + string + '" did not contain "' + match + '"');
+  }
 };
 
 // Export the module for nodejs

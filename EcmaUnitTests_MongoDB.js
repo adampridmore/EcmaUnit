@@ -19,7 +19,7 @@ var tests = {
     assert(result.failCount === 0, 'Expected result.failCount was 0');
     assert(result.testResults.length === 1);
     assert(result.testResults[0].result === 'pass');
-    //assert(result.testResults[0].testName === 'test1', result.testResults[0].testName);
+    assert(result.testResults[0].testName === 'test1', result.testResults[0].testName);
   },
 
   failingTest : function(){
@@ -46,28 +46,26 @@ var tests = {
 
     var testFixture = {
       test1: function(){
-        throw 'test2_error';
-        //assert.fail('test2_error');
+        // Passes
       },
       test2: function(){
-        // Passes
-      }
+        assert.fail('test2_error');
+      },      
     };
 
     var result = runner.run(testFixture);
 
     var actualText = result.stringify();
 
-    // print('+');
-    // print(actualText);
-    var actualLines = actualText.split('\r\n');
+    var actualLines = actualText.split('\n');
 
-    assert.areEqual(actualLines[0], 'Test Results');
-    assert.areEqual(actualLines[1], '============');
-    assert.areEqual(actualLines[2], 'Ran');
-    assert.areEqual(actualLines[3], 'test1\t-\tfail');
-    assert.areEqual(actualLines[4], '\tException: \'test2_error\'');
-    assert.areEqual(actualLines[5], 'test2\t-\tpass');
+    assert.areEqual('Test Results', actualLines[0]);
+    assert.areEqual('============', actualLines[1]);
+    assert.areEqual('Ran', actualLines[2]);
+    assert.areEqual('test1\t-\tpass', actualLines[3]);
+    assert.areEqual('test2\t-\tfail', actualLines[4]);
+    assert.areEqual('Exception: \'Error: Fail: test2_error\'', actualLines[5].trim());
+    assert.areEqual('At: Error: Fail: test2_error', actualLines[6].trim());
   },
 
   assertEquals_when_equal : function(){
@@ -97,7 +95,7 @@ var tests = {
       assert.areEqual('a', 'b', "MyErrorMessage");
       assert(false, 'Expected exception to be thrown.');
     }catch(e){
-      assert(e.toString()=== "Error: Expected 'a' but was 'b'\r\nMessage: MyErrorMessage", e);
+      assert(e.toString()=== "Error: Expected 'a' but was 'b'\nMessage: MyErrorMessage", e);
     }
   },
 
@@ -137,6 +135,9 @@ function main(){
       failed = true;
       print('** Test Failed **: ' + testName);
       print(e);
+      if (e.stack){
+        print(e.stack);
+      }      
     }
   };
 

@@ -68,7 +68,7 @@ ecmaUnit.FixtureResult = function(){
       }
     });
 
-    return lines.join('\r\n');
+    return lines.join('\n');
   };
 
   this.setPassedFlag = function(fixtureResult){
@@ -90,7 +90,7 @@ assert.areEqual = function(expected, actual, message){
   var errorMessage = "Expected '" + expected + "' but was '" + actual + "'";
 
   if (message){
-    errorMessage += '\r\nMessage: ' + message;
+    errorMessage += '\nMessage: ' + message;
   }
 
   throw new Error(errorMessage);

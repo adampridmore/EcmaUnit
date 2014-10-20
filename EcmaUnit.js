@@ -1,4 +1,4 @@
-// Version 1.2
+// Version 1.2.1
 
 var ecmaUnit = ecmaUnit || {};
 
@@ -83,17 +83,38 @@ ecmaUnit.FixtureResult = function(){
 var assert = assert || {};
 
 assert.areEqual = function(expected, actual, message){
-  if (expected === actual){
+  var isDate = function(value){
+    if (typeof(value) === "object"){
+      if (value.getTime){
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  var isEqual = function(v1, v2){
+    if (v1 === null && v2 === null){
+      return true;
+    }
+
+    if (isDate(v1) && isDate(v2)){
+      return (v1.getTime() === v2.getTime());
+    }
+
+    return expected === actual;
+  }
+  
+  if (isEqual(expected, actual)){
     return;
+  }else{
+    var errorMessage = "Expected '" + expected + "' but was '" + actual + "'";
+    if (message){
+      errorMessage += '\nMessage: ' + message;
+    }
+
+    throw new Error(errorMessage);
   }
-
-  var errorMessage = "Expected '" + expected + "' but was '" + actual + "'";
-
-  if (message){
-    errorMessage += '\nMessage: ' + message;
-  }
-
-  throw new Error(errorMessage);
 };
 
 assert.fail = function(message){

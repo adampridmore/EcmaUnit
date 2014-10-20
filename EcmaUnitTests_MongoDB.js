@@ -99,6 +99,27 @@ var tests = {
     }
   },
 
+  assert_areEqual_for_nulls : function(){
+    assert.areEqual(null,null);
+  },
+
+  assert_areEqual_for_dates : function(){
+    var d1 = new ISODate('2014-01-01T00:00:00Z');
+    var d2 = new ISODate('2014-01-01T00:00:00Z');
+    assert.areEqual(d1,d2);
+  },
+
+  /*assert_areEqual_for_dates_that_are_different: function(){
+    var d1 = new ISODate('2014-01-01T00:00:00Z');
+    var d2 = new ISODate('2014-01-02T00:00:00Z');
+    try{
+      assert.areEqual(d1,d2);  
+      assert(false, 'Expected exception to be thrown.');
+    }catch(e){
+      assert(e.toString() === "Error: Expected '2014-01-01T00:00:00Z' but was '2014-01-02T00:00:00Z'", e.toString());
+    }    
+  },*/
+
   assertFail : function(){
     try{
       assert.fail('MyFailMessage');

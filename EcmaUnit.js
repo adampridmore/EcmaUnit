@@ -1,4 +1,4 @@
-// Version 1.1
+// Version 1.2
 
 var ecmaUnit = ecmaUnit || {};
 
@@ -105,6 +105,19 @@ assert.stringContains = function(string, match){
     throw new Error('String "' + string + '" did not contain "' + match + '"');
   }
 };
+
+assert.isTrue = function(value){
+  if(!value){
+    throw new Error('Expected truthy, but was: ' + value);
+  }
+};
+
+assert.isFalse = function(value){
+  if(value){
+    throw new Error('Expected falsy, but was: ' + value);
+  }
+};
+
 
 // Export the module for nodejs
 var module = module || null;

@@ -108,16 +108,42 @@ var tests = {
     }    
   },
 
-  assertContains : function(actualText, contains){
+  assertContains : function(){
     assert.stringContains('abc','a');
   },
 
-  assertContains_when_no_match : function(actualText, contains){
+  assertContains_when_no_match : function(){
     try{
       assert.stringContains('abc','d');
       assert.fail('Exception not thrown');
     }catch(e){
       assert(e.toString() === 'Error: String "abc" did not contain "d"', e.toString());
+    }    
+  },
+
+  assert_isTrue_when_true : function(){
+    assert.isTrue(true);
+  },
+
+  assert_isTrue_when_false: function(){
+    try{
+      assert.isTrue(false);
+      assert.fail('Exception not thrown');
+    }catch(e){
+      assert(e.toString() === 'Error: Expected truthy, but was: false', e.toString());
+    }    
+  },
+
+  assert_isFalse_when_false : function(){
+    assert.isFalse(false);
+  },
+
+  assert_isFalse_when_true: function(){
+    try{
+      assert.isFalse(true);
+      assert.fail('Exception not thrown');
+    }catch(e){
+      assert(e.toString() === 'Error: Expected falsy, but was: true', e.toString());
     }    
   },
 }

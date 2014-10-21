@@ -55,7 +55,7 @@ var tests = {
     }
 
     var runner = new ecmaUnit.Runner();
-    var r = runner.run(testFixture, {runSingleTest: 'test2'});
+    var r = runner.run(testFixture, {runSingleTest: 'test1'});
 
     assert.isTrue(test1Run);
     assert.isFalse(test2Run);

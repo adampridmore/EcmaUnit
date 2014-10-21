@@ -1,4 +1,4 @@
-// Version 1.2.2
+// Version 1.2.3
 
 var ecmaUnit = ecmaUnit || {};
 
@@ -9,6 +9,17 @@ ecmaUnit.Runner = function (){
       return (typeof func === 'function');
     };
 
+    var shouldRunTest = function(options, testName){
+      if (options && options.runSingleTest){
+        if (options.runSingleTest === testName){
+          return true;
+        }else{
+          return false;
+        }
+      }
+      return true;
+    }
+
     var runTest = function(test, fixtureResult, testName, options){
       var testResult = {
         testName: testName
@@ -16,10 +27,7 @@ ecmaUnit.Runner = function (){
 
       fixtureResult.testResults.push(testResult);
 
-      if (options && options.runSingleTest && options.runSingleTest === testName){
-        testResult.result = 'skipped'
-        fixtureResult.skippedCount++;
-      } else{
+      if (shouldRunTest(options, testName)){
         try{
           test();
           testResult.result = 'pass';
@@ -29,6 +37,9 @@ ecmaUnit.Runner = function (){
           testResult.exception = exception;
           fixtureResult.failCount++;
         }
+      }else{
+        testResult.result = 'skipped'
+        fixtureResult.skippedCount++;
       }
     };
 

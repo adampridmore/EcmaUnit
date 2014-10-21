@@ -41,6 +41,28 @@ var tests = {
     assert(result.testResults[0].result === "fail");
   },
 
+  run_single_test : function(){
+    var test1Run = false;
+    var test2Run = false;
+
+    var testFixture = {
+      test1: function(){
+        test1Run = true;
+      },
+      test2: function(){
+        test2Run = true;
+      }
+    }
+
+    var runner = new ecmaUnit.Runner();
+    var r = runner.run(testFixture, {runSingleTest: 'test2'});
+
+    assert.isTrue(test1Run);
+    assert.isFalse(test2Run);
+    assert.areEqual(1, r.passCount);
+    assert.areEqual(1, r.skippedCount);
+  },
+
   printTestResults : function(){
     var runner = new ecmaUnit.Runner();
 
@@ -109,16 +131,16 @@ var tests = {
     assert.areEqual(d1,d2);
   },
 
-  /*assert_areEqual_for_dates_that_are_different: function(){
+  assert_areEqual_for_dates_that_are_different: function(){
     var d1 = new ISODate('2014-01-01T00:00:00Z');
     var d2 = new ISODate('2014-01-02T00:00:00Z');
     try{
       assert.areEqual(d1,d2);  
       assert(false, 'Expected exception to be thrown.');
     }catch(e){
-      assert(e.toString() === "Error: Expected '2014-01-01T00:00:00Z' but was '2014-01-02T00:00:00Z'", e.toString());
+      assert(e.toString() === "Error: Expected 'Wed Jan 01 2014 00:00:00 GMT+0000 (GMT Standard Time)' but was 'Thu Jan 02 2014 00:00:00 GMT+0000 (GMT Standard Time)'", e.toString());
     }    
-  },*/
+  },
 
   assertFail : function(){
     try{
@@ -178,6 +200,7 @@ function main(){
   for(var testName in tests){
     try{
       tests[testName]();
+      print('Ran: ' + testName);
     }catch(e){
       failed = true;
       print('** Test Failed **: ' + testName);

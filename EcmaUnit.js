@@ -1,38 +1,44 @@
-// Version 1.2.1
+// Version 1.2.2
 
 var ecmaUnit = ecmaUnit || {};
 
 ecmaUnit.Runner = function (){
-  this.run = function(testFixture){
+  this.run = function(testFixture, options){
 
     var isFunction = function(func){
-      return (typeof func === "function");
+      return (typeof func === 'function');
     };
 
-    var runTest = function(test, fixtureResult, testName){
+    var runTest = function(test, fixtureResult, testName, options){
       var testResult = {
         testName: testName
       };
 
       fixtureResult.testResults.push(testResult);
-      try{
-        test();
-        testResult.result = "pass";
-        fixtureResult.passCount++;
-      }catch(exception){
-        testResult.result = "fail";
-        testResult.exception = exception;
-        fixtureResult.failCount++;
+
+      if (options && options.runSingleTest && options.runSingleTest === testName){
+        testResult.result = 'skipped'
+        fixtureResult.skippedCount++;
+      } else{
+        try{
+          test();
+          testResult.result = 'pass';
+          fixtureResult.passCount++;
+        }catch(exception){
+          testResult.result = 'fail';
+          testResult.exception = exception;
+          fixtureResult.failCount++;
+        }
       }
     };
 
-    var runFixtureInternal = function(testFixture){
+    var runFixtureInternal = function(testFixture, options){
       var fixtureResult = new ecmaUnit.FixtureResult();
 
       for(property in testFixture){
         var test = testFixture[property];
         if (isFunction(test)){
-          runTest(test, fixtureResult, property);
+          runTest(test, fixtureResult, property,options);
         }
       }
 
@@ -41,7 +47,7 @@ ecmaUnit.Runner = function (){
       return fixtureResult;
     };
 
-    return runFixtureInternal(testFixture);
+    return runFixtureInternal(testFixture, options);
   }
 };
 
@@ -50,6 +56,7 @@ ecmaUnit.FixtureResult = function(){
   this.testResults = [];
   this.passCount = 0;
   this.failCount = 0;
+  this.skippedCount = 0;
   
   this.stringify = function(){
     var lines = [];

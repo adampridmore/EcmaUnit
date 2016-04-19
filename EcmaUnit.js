@@ -1,4 +1,4 @@
-// Version 1.2.3
+// Version 1.2.4
 
 var ecmaUnit = ecmaUnit || {};
 
@@ -102,13 +102,7 @@ var assert = assert || {};
 
 assert.areEqual = function(expected, actual, message){
   var isDate = function(value){
-    if (typeof(value) === "object"){
-      if (value.getTime){
-        return true;
-      }
-    }
-
-    return false;
+	return value instanceof Date;
   };
 
   var isEqual = function(v1, v2){

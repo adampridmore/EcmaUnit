@@ -1,12 +1,12 @@
-#EcmaUnit
+# EcmaUnit
 
 A pure EcmaScript / JavaScript unit testing framework, with no dependencies on running in a browsers or nodejs etc.
 
-##Getting Started
+## Getting Started
 
 Just load the EcmaUnit.js into your JavaScript runtime, create a fixture and run it.
 
-###General
+### General
 ```
 var fixture = {
   test1: function(){
@@ -19,7 +19,7 @@ var result = runner.run(fixture);
 console.log(result.stringify());
 ```
 
-###For MongoDB
+### For MongoDB
 ```javascript
 load('./ecmaUnit.js');
 
@@ -35,7 +35,7 @@ var result = runner.run(fixture);
 print(result.stringify());
 ```
 
-###For node.js
+### For node.js
 ```javascript
 var ecmaUnit = require('./EcmaUnit.js').ecmaUnit;
 var assert = require('./EcmaUnit.js').assert;
@@ -56,7 +56,7 @@ if (!result.passed){
 }
 ```
 
-###For HTML
+### For HTML
 
 ```HTML
 <html>
